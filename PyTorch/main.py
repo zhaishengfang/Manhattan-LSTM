@@ -61,8 +61,8 @@ if __name__ == "__main__":
     print("Training Network.")
 
     # 在训练阶段停止运行。
-    print('exit')
-    exit()
+    # print('exit')
+    # exit()
 
     train_network = Train_Network(model, data.index2word)
 
