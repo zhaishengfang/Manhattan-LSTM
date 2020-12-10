@@ -31,7 +31,7 @@ class Data(object):
 
         else:
             self.score_col = score_col
-            self.sequence_cols = questions_cols
+            self.sequence_cols = sentence_cols
 
         self.x_train = list()
         self.y_train = list()

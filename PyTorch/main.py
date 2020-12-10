@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import argparse
 
 import torch
@@ -10,13 +12,15 @@ from run_iterations import Run_Iterations
 
 use_cuda = torch.cuda.is_available()
 
+
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-dn", "--data_name", type=str, help="Dataset name.", default="quora")
     parser.add_argument("-df", "--data_file", type=str, help="Path to dataset.", default="../Datasets/quora.tsv")
-    parser.add_argument("-e", "--embd_file", type=str, help="Path to Embedding File.", default="../../Embeddings/GoogleNews/GoogleNews-vectors-negative300.bin.gz")
+    parser.add_argument("-e", "--embd_file", type=str, help="Path to Embedding File.", default=r"C:/Users/zsf/Desktop/GoogleNews/GoogleNews-vectors-negative300.bin.gz")
     parser.add_argument("-tr", "--training_ratio", type=float, help="Ratio of training set.", default=0.8)
     parser.add_argument("-l", "--max_len", type=int, help="Maximum number of words in a sentence.", default=20)
     parser.add_argument("-tp", "--tracking_pair", type=bool, help="Track change in outputs over a randomly chosen sample.", default=False)
@@ -35,7 +39,7 @@ if __name__ == "__main__":
     print('Number of Epochs             :', args.num_iters)
     print('--------------------------------------\n')
 
-    print('Reading Data.')
+    print('Reading Data...')
     data = Data(args.data_name, args.data_file, args.training_ratio, args.max_len)
 
     print('\n')
@@ -55,6 +59,11 @@ if __name__ == "__main__":
     model.init_weights()
 
     print("Training Network.")
+
+    # 在训练阶段停止运行。
+    print('exit')
+    exit()
+
     train_network = Train_Network(model, data.index2word)
 
     run_iterations = Run_Iterations(args.data_name, train_network, data.x_train, data.y_train, data.index2word,
