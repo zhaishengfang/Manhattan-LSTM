@@ -4,6 +4,7 @@ from torch import Tensor
 from torch import optim
 import torch.nn.functional as F
 
+
 class Manhattan_LSTM(nn.Module):
     def __init__(self, data_name, hidden_size, embedding, use_embedding=False, train_embedding=True):
         super(Manhattan_LSTM, self).__init__()
@@ -34,8 +35,8 @@ class Manhattan_LSTM(nn.Module):
         input           -> (2 x Max. Sequence Length (per batch) x Batch Size)
         hidden          -> (2 x Num. Layers * Num. Directions x Batch Size x Hidden Size)
         '''
-        embedded_1 = self.embedding(input[0]) # L, B, V
-        embedded_2 = self.embedding(input[1]) # L, B, V
+        embedded_1 = self.embedding(input[0])  # L, B, V
+        embedded_2 = self.embedding(input[1])  # L, B, V
 
         batch_size = embedded_1.size()[1]
 

@@ -17,12 +17,13 @@ use_cuda = torch.cuda.is_available()
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-
+    # blak font ??
+    #        font
     parser.add_argument("-dn", "--data_name", type=str, help="Dataset name.", default="quora")
     parser.add_argument("-df", "--data_file", type=str, help="Path to dataset.", default="../Datasets/quora.tsv")
-    parser.add_argument("-e", "--embd_file", type=str, help="Path to Embedding File.", default=r"C:/Users/zsf/Desktop/GoogleNews/GoogleNews-vectors-negative300.bin.gz")
+    parser.add_argument("-e", "--embd_file", type=str, help="Path to Embedding File.", default=r"C:\Users\Administrator\Desktop\GoogleNews-vectors-negative300.bin")
     parser.add_argument("-tr", "--training_ratio", type=float, help="Ratio of training set.", default=0.8)
-    parser.add_argument("-l", "--max_len", type=int, help="Maximum number of words in a sentence.", default=20)
+    parser.add_argument("-l", "--max_len", type=int, help="Maximum number of words in a sentence.", default=50)
     parser.add_argument("-tp", "--tracking_pair", type=bool, help="Track change in outputs over a randomly chosen sample.", default=False)
     parser.add_argument("-z", "--hidden_size", type=int, help="Number of Units in LSTM layer.", default=50)
     parser.add_argument("-b", "--batch_size", type=int, help="Batch Size.", default=32)
@@ -39,6 +40,18 @@ if __name__ == "__main__":
     print('Number of Epochs             :', args.num_iters)
     print('--------------------------------------\n')
 
+    print('Building Embedding Matrix')
+    embedding = Get_Embedding(args.embd_file, data.word2index)
+    embedding_size = embedding.embedding_matrix.shape[1]
+
+    print('Building model.')
+    model = Manhattan_LSTM(args.data_name, args.hidden_size, embedding.embedding_matrix, use_embedding=True,
+                           train_embedding=True)
+    if use_cuda: model = model.cuda()
+
+    model.init_weights()
+
+
     print('Reading Data...')
     data = Data(args.data_name, args.data_file, args.training_ratio, args.max_len)
 
@@ -48,15 +61,7 @@ if __name__ == "__main__":
     print('Maximum sequence length           :', args.max_len)
     print('\n')
 
-    print('Building Embedding Matrix')
-    embedding = Get_Embedding(args.embd_file, data.word2index)
-    embedding_size = embedding.embedding_matrix.shape[1]
 
-    print('Building model.')
-    model = Manhattan_LSTM(args.data_name, args.hidden_size, embedding.embedding_matrix, use_embedding=True, train_embedding=True)
-    if use_cuda: model = model.cuda()
-
-    model.init_weights()
 
     print("Training Network.")
 

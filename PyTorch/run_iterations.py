@@ -10,6 +10,8 @@ from nltk import bleu_score
 
 from helper import Helper
 
+
+
 class Run_Iterations(object):
     def __init__(self, data_name, model, x_train, y_train, index2word, batch_size, num_iters,
                  learning_rate, tracking_pair=False, x_val=[], y_val=[], print_every=1, plot_every=1):
@@ -50,6 +52,7 @@ class Run_Iterations(object):
 
         print('Beginning Model Training.\n')
 
+        # 没有random吗
         for epoch in range(1, self.num_iters + 1):
             for i in range(0, self.train_samples, self.batch_size):
                 input_variables = self.x_train[i : i + self.batch_size] # Batch Size x Sequence Length

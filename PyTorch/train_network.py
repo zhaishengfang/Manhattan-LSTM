@@ -20,6 +20,7 @@ class Train_Network(object):
         PyTorch pad_sequence method doesn't take pad length, making this step problematic.
         Therefore, lists concatenated, padded to common length, and then split.
         '''
+
         temp = rnn.pad_sequence(sequences_1 + sequences_2)
         sequences_1 = temp[:, :batch_size]
         sequences_2 = temp[:, batch_size:]

@@ -1,12 +1,13 @@
 import numpy as np
 from gensim.models import KeyedVectors
-
 import torch
+
+
 
 class Get_Embedding(object):
     def __init__(self, file_path, word_index):
         self.use_cuda = torch.cuda.is_available()
-        self.embedding_size = 300 # Dimensionality of Google News' Word2Vec
+        self.embedding_size = 300   # Dimensionality of Google News' Word2Vec
         self.embedding_matrix = self.create_embed_matrix(file_path, word_index)
 
     def create_embed_matrix(self, file_path, word_index):
